@@ -1,18 +1,9 @@
-from sqlalchemy import String, create_engine, JSON
+from sqlalchemy import String, JSON, Boolean, create_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column
 from os import getcwd
 
-# Conexion con Postgresql
-    #POSTGRES_USER = "myuser"
-    #POSTGRES_PASSWORD = "mypassword"
-    #POSTGRES_DB = "mydatabase"
-    #POSTGRES_HOST = "localhost"
-    #POSTGRES_PORT = 5432
-    #DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
-
 # Conexion con Sqlite3
 DATABASE_URL = f"sqlite:///{getcwd()}/db.db"
-
 engine = create_engine(DATABASE_URL, echo=True)
 
 class Base(DeclarativeBase):
@@ -20,13 +11,15 @@ class Base(DeclarativeBase):
 
 class Users(Base):
     __tablename__ = "users"
-    id: Mapped[int] = mapped_column(primary_key=True)
-    name:  Mapped[str] = mapped_column(String(40)) 
+    id: Mapped[int] = mapped_column(primary_key=True)    
     username: Mapped[str] = mapped_column(String(10))
-    password: Mapped[str] = mapped_column(String(12))   
+    password: Mapped[str] = mapped_column(String(10))  
+    name:  Mapped[str] = mapped_column(String(30))  
+    email: Mapped[str] = mapped_column(String(30))
+    active: Mapped[bool] = mapped_column(Boolean)  
 
     def __repr__(self) -> str:        
-        return f"Users(id={self.id!r}, username={self.username!r}, password={self.password!r}, name={self.name!r})"
+        return f"Users(id={self.id!r}, username={self.username!r}, password={self.password!r}, name={self.name!r}, email={self.email!r}, active={self.active!r})"
 
 class Persons(Base):
     __tablename__ = "persons"
