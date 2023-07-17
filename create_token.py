@@ -16,26 +16,34 @@ def get_user(username: str):
     user_db = session.query(Users).where(Users.username == username).all()
     if user_db:
         return user_db[0]
+    
     return False
 
 def encode_token(username: str):   
     payload = {"sub": username, "exp": datetime.utcnow() + timedelta(hours=EXPIRE)}
     token = jwt.encode(payload, SECRET, algorithm=ALGORITHM)
+
     return token
 
-def decode_token(token: str = Depends(oauth2)):    
+def decode_token(token: str = Depends(oauth2)):       
     try:
         username = jwt.decode(token, SECRET, algorithms=[ALGORITHM]).get("sub")
         if username is None:
-            return False        
+            return False  
+              
     except JWTError:      
         return False 
+    
     user = get_user(username)
-    del user.__dict__["password"]   
-    return user
+    if user:
+        del user.__dict__["password"]   
+        return user
+    
+    return False
 
 def verify_password(password: str, hash: str):
     return crypt.verify(password, hash)
 
-   
+def hash_password(password: str):
+    return crypt.hash(password)
 

@@ -5,7 +5,7 @@ class User(BaseModel):
     password: str
     name: str
     email: str
-    active: bool
+    active: bool = True
 
 class Person(BaseModel):    
     dni: str

@@ -40,8 +40,8 @@ class Calendars(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     unidad: Mapped[str] = mapped_column(String)
     trabajadores: Mapped[list] = mapped_column(JSON)
-    turnos: Mapped[list] = mapped_column(JSON)
-    apoyos: Mapped[list] = mapped_column(JSON)
+    dia: Mapped[list] = mapped_column(JSON)
+    noche: Mapped[list] = mapped_column(JSON)   
 
     def __repr__(self) -> str:                
         return f"""Calendars(id={self.id!r}, unidad={self.unidad!r}, trabajadores={self.trabajadores!r}, turnos={self.turnos!r}, apoyos={self.apoyos!r})"""
