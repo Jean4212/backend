@@ -8,7 +8,7 @@ engine = create_engine(DATABASE_URL, echo=True)
 
 class Base(DeclarativeBase):
     pass
-
+    
 class Users(Base):
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(primary_key=True)    
@@ -35,16 +35,16 @@ class Persons(Base):
     def __repr__(self) -> str:                
         return f"""Persons(id={self.id!r}, dni={self.dni!r}, paterno={self.paterno!r}, materno={self.materno!r}, nombre={self.nombre!r}, nacimiento={self.nacimiento!r}, ingreso={self.ingreso!r}, cargo={self.cargo!r})"""
 
-class Calendars(Base):
+class Schedules(Base):
     __tablename__ = 'calendars'
     id: Mapped[int] = mapped_column(primary_key=True)
     unidad: Mapped[str] = mapped_column(String)
     trabajadores: Mapped[list] = mapped_column(JSON)
-    dia: Mapped[list] = mapped_column(JSON)
-    noche: Mapped[list] = mapped_column(JSON)   
+    turno_dia: Mapped[list] = mapped_column(JSON)
+    turno_noche: Mapped[list] = mapped_column(JSON)   
 
     def __repr__(self) -> str:                
-        return f"""Calendars(id={self.id!r}, unidad={self.unidad!r}, trabajadores={self.trabajadores!r}, turnos={self.turnos!r}, apoyos={self.apoyos!r})"""
+        return f"""Calendars(id={self.id!r}, unidad={self.unidad!r}, trabajadores={self.trabajadores!r}, dia={self.turno_dia!r}, noche={self.turno_noche!r})"""
 
 Base.metadata.create_all(engine)
 session = Session(engine)

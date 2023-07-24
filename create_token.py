@@ -46,4 +46,3 @@ def verify_password(password: str, hash: str):
 
 def hash_password(password: str):
     return crypt.hash(password)
-

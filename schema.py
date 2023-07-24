@@ -16,4 +16,10 @@ class Person(BaseModel):
     ingreso: str   
     cargo: str  
 
+class Schedule(BaseModel):
+    unidad: str
+    trabajadores: list
+    turno_dia: list
+    turno_noche: list
+
     
